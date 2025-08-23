@@ -227,7 +227,7 @@ POST http://localhost:3001/api/mcp
     "params": {
       "name": "login",
       "arguments": {
-        "email": "example@supercommerce.ai",
+        "email": "example@paytal.ai",
         "password": "Pa$$W@rd"
       }
     }

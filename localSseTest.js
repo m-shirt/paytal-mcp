@@ -15,7 +15,7 @@ const app = express();
 const transports = {};
 const servers = {};
 
-const SERVER_NAME = "supercommerce";
+const SERVER_NAME = "paytal";
 
 app.get("/sse", async (req, res) => {
   const server = new Server(

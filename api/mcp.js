@@ -20,7 +20,7 @@ export default async function handler(req, res) {
   const prompts = await discoverPrompts();
    // console.log(JSON.stringify(tools, null, 2));
 
-  const server = new Server({ name: "paytal", version: "0.1.0" }, { capabilities: { tools: {} } });
+  const server = new Server({ name: "paytal", version: "0.1.0" }, { capabilities: { tools: {} , prompts: {} } });
   await setupServerHandlers(server, tools, prompts);
 
   const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
