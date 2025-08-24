@@ -20,7 +20,8 @@ console.error("Access token being sent:", access_token);
     const response = await fetch(`${apiUrl}/upload`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${access_token}`
+        'Authorization': `Bearer ${access_token}`,
+        'Accept': 'application/json' 
       },
       body: formData
     });
