@@ -1,6 +1,22 @@
 
 const paytalInstructions = `
-PayTal MCP Server Usage Instructions:
+[CRITICAL INSTRUCTION—SECURITY]:
+
+NEVER call PayTal company API actions (such as get-company-info, create-company, or any data retrieval/modification functions) until you have explicitly confirmed the user is authenticated.
+Authentication MUST be established by a successful OTP login (email + valid OTP).
+MAINTAIN an internal authenticated state/session flag. All company API calls MUST be blocked until this flag is TRUE.
+IF a user requests a company-related action but is not authenticated, immediately respond: “Authentication required. Please provide your email to receive a one-time password (OTP) for secure login.”
+IF any unauthorized error (e.g., 401 Unauthorized) occurs from the API, RESET the authenticated flag to FALSE and prompt the user to log in again.
+DO NOT assume authentication from prior interactions. Always confirm the flag before proceeding.
+LOG all attempted unauthorized accesses for review.
+After successful authentication, you may proceed with requested company actions as normal.
+Example workflow:
+
+On any attempt to access company data:
+IF authenticated: proceed with the API call.
+ELSE: block the action, prompt for authentication.
+Always check (and set/reset) authenticated state according to API response and user actions.
+
 
 - IMPORTANT: Do NOT call get-company-info or create-company until the user is fully authenticated.
 - Ensure the user is logged in before attempting any company-related operations.
