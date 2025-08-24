@@ -17,6 +17,7 @@ const executeFunction = async () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
         'Authorization': `Bearer ${access_token}`
       }
     });

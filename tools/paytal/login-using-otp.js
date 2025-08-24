@@ -23,7 +23,8 @@ const executeFunction = async ({ email, otp }) => {
 
     // Set up headers for the request
     const headers = {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
     };
 
     // Perform the fetch request

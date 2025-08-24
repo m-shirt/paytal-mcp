@@ -33,6 +33,7 @@ const executeFunction = async (companyDetails) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        'Accept': 'application/json',
         Authorization: `Bearer ${access_token}`,
       },
       body: JSON.stringify(companyDetails),
