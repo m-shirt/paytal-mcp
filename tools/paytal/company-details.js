@@ -71,7 +71,7 @@ const apiTool = {
     type: 'function',
     function: {
       name: 'create_company',
-      description: 'Create company details in the PayTal system.',
+      description: 'Create company details in the PayTal system. IMPORTANT: Do NOT call get-company-info or create-company until the user is fully authenticated',
       parameters: {
         type: 'object',
         properties: {

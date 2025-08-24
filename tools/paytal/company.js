@@ -8,7 +8,6 @@ import { getAccessToken } from "../../lib/tokenStore.js";
 const executeFunction = async () => {
   const apiUrl = process.env.PAYTAL_API_URL ;
   const access_token = getAccessToken(); // will be get from data.access_token from login
-console.error("Access token being sent:", access_token);
   try {
     // Construct the URL for the request
     const url = `${apiUrl}/company`;
@@ -58,7 +57,7 @@ const apiTool = {
     type: 'function',
     function: {
       name: 'get_company_info',
-      description: 'Retrieve company information from the PayTal API.',
+      description: 'Retrieve company information from the PayTal API. IMPORTANT: Do NOT call get-company-info or create-company until the user is fully authenticated',
       parameters: {
         type: 'object',
         properties: {},

@@ -24,6 +24,8 @@ ERROR HANDLING:
 - Always check for authentication errors and guide user through login again
 - Handle invalid OTP by requesting new one
 - Inform user of any missing required fields
+- Ifthe API returns errors event if it was html,find the error message and display the error message to the user
+
 
 FUNCTION NAMES TO USE:
 - request-otp-for-login
