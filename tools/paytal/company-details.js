@@ -60,7 +60,7 @@ const executeFunction = async (companyDetails) => {
     }
     // Check if the response was successful
     if (!response.ok) {
-      throw new Error(`contentType ${response.status}: ${JSON.stringify(res)}`);
+      throw new Error(`status ${response.status}: ${JSON.stringify(res)}`);
     }
 
     return res;
