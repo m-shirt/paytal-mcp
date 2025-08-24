@@ -67,9 +67,9 @@ export async function setupServerHandlers(server, tools, prompts) {
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
-   // console.log("\n=== Incoming Tool Call ===");
-   // console.log("Tool Name:", request.params.name);
-   // console.log("Arguments:", JSON.stringify(request.params.arguments, null, 2));
+   console.log("\n=== Incoming Tool Call ===");
+   console.log("Tool Name:", request.params.name);
+   console.log("Arguments:", JSON.stringify(request.params.arguments, null, 2));
 
     const toolName = request.params.name;
     const tool = tools.find((t) => t.definition.function.name === toolName);
@@ -89,8 +89,8 @@ export async function setupServerHandlers(server, tools, prompts) {
     }
     try {
       const result = await tool.function(args);
-     // console.log("=== Tool Result ===");
-     // console.log(JSON.stringify(result, null, 2));
+     console.log("=== Tool Result ===");
+     console.log(JSON.stringify(result, null, 2));
       return {
         content: [
           {

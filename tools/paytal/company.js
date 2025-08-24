@@ -30,6 +30,8 @@ const executeFunction = async () => {
       res = JSON.parse(rawText);
     } else {
       res = { raw: rawText };
+      throw new Error(`contentType ${contentType}: Response is not JSON Try again with Vaild Data`);
+
     }
     // Check if the response was successful
     if (!response.ok) {
