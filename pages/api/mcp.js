@@ -1,9 +1,9 @@
-import { discoverTools } from "../../../lib/tools.js";
-import { discoverPrompts } from "../../../lib/prompts.js"; // path to the helper
+import { discoverTools } from "../../lib/tools.js";
+import { discoverPrompts } from "../../lib/prompts.js"; // path to the helper
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import { setupServerHandlers } from "../../../mcpServer.js"; // if you export it
+import { setupServerHandlers } from "../../mcpServer.js"; // if you export it
 
 export default async function handler(req, res) {
 
