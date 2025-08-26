@@ -1,12 +1,17 @@
-import { Command } from "commander";
-import { registerToolsCommand } from "./commands/tools.js";
-import { registerPromptsCommand } from "./commands/prompts.js";
+import dynamic from "next/dynamic";
 
-const program = new Command();
+const Inspector = dynamic(
+  async () => {
+    const mod = await import("@modelcontextprotocol/inspector/web");
+    return mod.InspectorApp;
+  },
+  { ssr: false }
+);
 
-// Register commands
-registerToolsCommand(program);
-registerPromptsCommand(program);
-
-
-program.parse(process.argv);
+export default function Home() {
+  return (
+    <div style={{ height: "100vh", width: "100vw" }}>
+      <Inspector defaultEndpoint="/api/mcp" />
+    </div>
+  );
+}
