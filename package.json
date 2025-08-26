@@ -24,5 +24,8 @@
     "node": ">=18"
   },
   "author": "Postman, Inc.",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.16.5"
+  }
 }
