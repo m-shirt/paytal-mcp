@@ -1,3 +1,0 @@
-"use strict";exports.id=710,exports.ids=[710],exports.modules={1710:(e,t,s)=>{s.r(t),s.d(t,{default:()=>i});let i={id:"review-code",metadata:{title:"Code Review",description:"Review code for best practices and potential issues",argsSchema:[{name:"code",description:"reivew this code",required:!0}]},handler:({code:e})=>({messages:[{role:"user",content:{type:"text",text:`Please review this code:
-
-${e}`}}]})}}};
