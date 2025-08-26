@@ -14,8 +14,8 @@
     "start:stdio": "node mcpServer.js"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.17.0",
     "@modelcontextprotocol/inspector": "^0.16.5",
+    "@modelcontextprotocol/sdk": "^1.17.0",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
     "axios": "^1.11.0",
