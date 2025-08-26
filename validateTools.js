@@ -39,7 +39,7 @@ function checkArrayItems(schema) {
   return true;
 }
 
-console.log("🔍 Validating MCP tool schemas...\n");
+//console.log("🔍 Validating MCP tool schemas...\n");
 
 const tools = await discoverTools();
 
