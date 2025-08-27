@@ -109,6 +109,12 @@ export async function mcpHandler(req, res) {
   await transport.handleRequest(req, res, req.body);
 }
 export async function sseHandler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
+ if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
   const tools = await discoverTools();
   const prompts = await discoverPrompts();
   const server = new Server({ name: SERVER_NAME, version: '0.1.0' }, { capabilities: { tools: {}, prompts: {} } });
@@ -129,6 +135,12 @@ export async function sseHandler(req, res) {
 }
 
 export async function sseMessageHandler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
+ if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
   const sessionId = req.query.sessionId || req.body?.sessionId;  // ✅ support both
   const transport = transports[sessionId];
   const server = servers[sessionId];
