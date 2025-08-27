@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
+import JsonView from "react18-json-view";
+import "react18-json-view/src/style.css";
 
 export default function Home() {
   const [tools, setTools] = useState([]);
@@ -18,10 +20,24 @@ export default function Home() {
   const [logs, setLogs] = useState([]);
   const [serverInput, setServerInput] = useState(serverUrl);
 
-async function rpcRequest(baseUrl, method, params = {}) {
-  setLogs((l) => [...l, `➡️ Sending RPC request: ${method} to ${baseUrl}`]);
-  try {
-    const res = await fetch(baseUrl, {
+  function isCrossOrigin(url) {
+    try {
+      const target = new URL(url, window.location.origin);
+      return target.origin !== window.location.origin;
+    } catch {
+      return false;
+    }
+  }
+
+  async function rpcRequest(baseUrl, method, params = {}) {
+    let targetUrl = baseUrl;
+
+    // If the MCP server is cross-origin → proxy it
+    if (typeof window !== "undefined" && isCrossOrigin(baseUrl)) {
+      targetUrl = `/api/proxy?url=${encodeURIComponent(baseUrl)}`;
+    }
+
+    const res = await fetch(targetUrl, {
       method: "POST",
       headers: {
         Accept: "application/json, text/event-stream",
@@ -35,45 +51,31 @@ async function rpcRequest(baseUrl, method, params = {}) {
       }),
     });
 
-    setLogs((l) => [...l, `⬅️ Received HTTP ${res.status} from ${baseUrl}`]);
-
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
     const text = await res.text();
-    setLogs((l) => [...l, `📦 Raw response: ${text.slice(0, 200)}...`]);
 
     const match = text.match(/data:\s*(\{.*\})/);
     if (!match) throw new Error("No JSON payload in SSE response");
 
     const json = JSON.parse(match[1]);
-    setLogs((l) => [...l, `✅ Parsed JSON: ${JSON.stringify(json).slice(0,200)}...`]);
-
     if (json.error) throw new Error(json.error.message || "Unknown RPC error");
 
     return json.result;
-  } catch (e) {
-    setLogs((l) => [...l, `❌ RPC request failed: ${String(e)}`]);
-    throw e;
   }
-}
 
-
-
-
-
-async function loadTools(url) {
-  setLogs((l) => [...l, `🔍 Loading tools from ${url}...`]);
-  try {
-    const result = await rpcRequest(url, "tools/list", {});
-    setTools(result.tools || []);
-    setLogs((l) => [...l, `✅ Tools fetched: ${result.tools?.length || 0}`]);
-    return true; // ✅ success
-  } catch (e) {
-    setErr("Failed to load tools");
-    setLogs((l) => [...l, `❌ Error loading tools: ${String(e)}`]);
-    return false; // ✅ failed but caught
+  async function loadTools(url) {
+    setLogs((l) => [...l, `🔍 Loading tools from ${url}...`]);
+    try {
+      const result = await rpcRequest(url, "tools/list", {});
+      setTools(result.tools || []);
+      setLogs((l) => [...l, `✅ Tools fetched: ${result.tools?.length || 0}`]);
+      return true; // ✅ success
+    } catch (e) {
+      setErr("Failed to load tools");
+      setLogs((l) => [...l, `❌ Error loading tools: ${String(e)}`]);
+      return false; // ✅ failed but caught
+    }
   }
-}
   // useEffect(() => {
   //   async function init() {
   //     if (serverUrl) {
@@ -120,6 +122,7 @@ async function loadTools(url) {
         _meta: { progressToken: 20 },
       });
       setResponse(result);
+
       setLogs((l) => [...l, `Tool "${selected.name}" executed successfully`]);
     } catch (e) {
       setErr(String(e.message || e));
@@ -129,25 +132,25 @@ async function loadTools(url) {
     }
   }
 
- async function connect() {
-  setErr("");
-  setLogs((l) => [...l, `Connecting to ${serverInput}...`]);
+  async function connect() {
+    setErr("");
+    setLogs((l) => [...l, `Connecting to ${serverInput}...`]);
 
-  setTools([]);
-  setSelected(null);
+    setTools([]);
+    setSelected(null);
 
-  setServerUrl(serverInput);
+    setServerUrl(serverInput);
 
-  const ok = await loadTools(serverInput);
-  if (ok) {
-    setConnected(true);
-    setLogs((l) => [...l, `Connected successfully to ${serverInput}`]);
-  } else {
-    setConnected(false);
-    setErr(`Failed to connect to ${serverInput}`);
-    setLogs((l) => [...l, `Failed to connect to ${serverInput}`]);
+    const ok = await loadTools(serverInput);
+    if (ok) {
+      setConnected(true);
+      setLogs((l) => [...l, `Connected successfully to ${serverInput}`]);
+    } else {
+      setConnected(false);
+      setErr(`Failed to connect to ${serverInput}`);
+      setLogs((l) => [...l, `Failed to connect to ${serverInput}`]);
+    }
   }
-}
 
   function disconnect() {
     setConnected(false);
@@ -274,6 +277,7 @@ async function loadTools(url) {
 
             <section className={styles.response}>
               <h3>Response</h3>
+
               <pre>
                 {response
                   ? JSON.stringify(response, null, 2)
