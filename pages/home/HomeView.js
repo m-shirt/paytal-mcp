@@ -31,11 +31,11 @@ export default function HomeView({
       {/* Sidebar */}
       <aside className={styles.sidebar}>
         <h2>MCP Tools</h2>
-        {tools.length === 0 ? (
+        {tools?.length === 0 ? (
           <div className={styles.empty}>No tools found.</div>
         ) : (
           <ul>
-            {tools.map((t) => (
+            {tools?.map((t) => (
               <li key={t.name}>
                 <button
                   onClick={() => selectTool(t)}
@@ -193,7 +193,7 @@ export default function HomeView({
 
         <h3>Logs</h3>
         <div className={styles.logs}>
-          {logs.length === 0 ? "No logs yet." : logs.join("\n")}
+          {logs?.length === 0 ? "No logs yet." : logs?.join("\n")}
         </div>
       </aside>
     </div>
