@@ -267,7 +267,7 @@ export async function run() {
 
     const transport = new StdioServerTransport();
     await server.connect(transport);
-    console.log(`[Stdio Server] is running`);
+    //console.log(`[Stdio Server] is running`);
   }
 }
 run().catch(console.error);
